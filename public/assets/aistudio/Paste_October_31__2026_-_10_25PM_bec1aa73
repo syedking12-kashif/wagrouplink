@@ -1,0 +1,1545 @@
+# WT-LINKS — Complete Production Website Development Prompt
+
+## Project: WT-LINKS
+**Brand:** SK MODS  
+**Developer:** Syed Kashif  
+**Website:** https://wagrouplinks.vercel.app  
+**Platform:** Next.js + Vercel  
+**Project Type:** WhatsApp Group & Channel Directory  
+**Primary Goal:** Build a lightweight, fast, SEO-friendly, fully functional website where users can discover, submit, share, and promote WhatsApp Groups and Channels.
+
+---
+
+# 1. YOUR ROLE
+
+Act as a senior full-stack developer, UI/UX designer, database architect, security engineer, and SEO specialist.
+
+Build a complete, production-ready website called WT-LINKS.
+
+This must be a real, working web application.
+
+Do not create:
+- A static frontend mockup.
+- A fake dashboard with nonfunctional buttons.
+- A template with placeholder data pretending to be real.
+- A frontend-only application that cannot store submissions.
+- A design that looks like a generic AI-generated website.
+
+Every major feature must work, including the database, group submission, category management, search, click tracking, blog publishing, admin authentication, and promotion management.
+
+The website must be ready for deployment on Vercel.
+
+Use clean, maintainable, lightweight code.
+
+---
+
+# 2. BRANDING AND DESIGN DIRECTION
+
+Website name: WT-LINKS
+
+Branding:
+- WT-LINKS
+- Powered by SK MODS
+- Developed by Syed Kashif
+
+Primary color: WhatsApp-inspired green.
+
+Suggested color palette:
+
+- Primary: #16A34A
+- Primary dark: #15803D
+- Background: #F8FAFC
+- Surface: #FFFFFF
+- Text: #0F172A
+- Secondary text: #64748B
+- Border: #E2E8F0
+- Accent: #DCFCE7
+
+Design style:
+
+Create a premium, modern, clean, lightweight directory website.
+
+The website should feel like a professionally developed community platform.
+
+Do not use:
+- Excessive glassmorphism.
+- Heavy blur effects.
+- Excessive gradients.
+- Huge unnecessary animations.
+- Excessive shadows.
+- Cartoon-style graphics.
+- Emoji-based navigation icons.
+- Overly complex layouts.
+- Excessive JavaScript libraries.
+
+Use Lucide icons or lightweight SVG icons.
+
+Use a modern readable font such as Inter or Plus Jakarta Sans.
+
+The layout must be responsive across:
+
+- Mobile phones.
+- Tablets.
+- Laptops.
+- Desktop computers.
+
+Include a fully functional light/dark theme toggle.
+
+Persist the selected theme using localStorage.
+
+Respect the user's system theme on their first visit.
+
+The website must remain visually clear in both themes.
+
+---
+
+# 3. WEBSITE ARCHITECTURE
+
+Use the following technology stack.
+
+## Frontend
+
+- Next.js with App Router.
+- TypeScript.
+- Tailwind CSS.
+- Server Components by default.
+- Client Components only where interaction is required.
+- Lucide React icons.
+
+## Backend
+
+- Next.js Route Handlers.
+- Server-side database operations.
+- Server-side admin authentication.
+- Input validation using Zod or an equivalent lightweight validator.
+
+## Database
+
+Use Supabase PostgreSQL.
+
+## Image Storage
+
+Use Supabase Storage for:
+
+- Group profile pictures.
+- Channel profile pictures.
+- Blog cover images.
+- Blog content images.
+
+## Hosting
+
+Deploy on Vercel.
+
+## Analytics
+
+Implement lightweight database-based analytics for:
+
+- Group clicks.
+- Channel clicks.
+- Page views.
+- Popular groups.
+- Popular channels.
+- Promotion performance.
+
+Do not install unnecessary libraries.
+
+Avoid large UI component libraries if lightweight custom components can accomplish the same task.
+
+---
+
+# 4. PUBLIC WEBSITE STRUCTURE
+
+Create the following pages.
+
+/
+Homepage
+
+/groups
+All WhatsApp groups
+
+/channels
+All WhatsApp channels
+
+/categories
+All categories
+
+/category/[slug]
+Category-specific directory
+
+/group/[slug]
+Individual group detail page
+
+/channel/[slug]
+Individual channel detail page
+
+/submit
+Submit a WhatsApp group or channel
+
+/featured
+Featured and promoted groups/channels
+
+/recent
+Recently added groups and channels
+
+/popular
+Most popular groups and channels
+
+/blog
+Blog listing
+
+/blog/[slug]
+Individual blog article
+
+/about
+About WT-LINKS
+
+/contact
+Contact page
+
+/terms
+Terms and conditions
+
+/privacy-policy
+Privacy policy
+
+/disclaimer
+Disclaimer
+
+/report
+Report a group or channel
+
+/404
+Custom not-found page
+
+/SK
+Private admin dashboard and authentication entry point
+
+The admin area must be protected by server-side authentication.
+
+Do not expose the admin dashboard to unauthenticated users.
+
+---
+
+# 5. HOMEPAGE DESIGN
+
+Create a beautiful, professional homepage.
+
+## Header
+
+Include:
+
+- WT-LINKS logo.
+- Home.
+- Groups.
+- Channels.
+- Categories.
+- Featured.
+- Blog.
+- Search.
+- Submit Link button.
+- Light/dark theme toggle.
+
+On mobile, use a clean responsive navigation menu.
+
+## Hero Section
+
+Create an attractive hero section.
+
+Suggested heading:
+
+"Discover Your Community on WhatsApp"
+
+Suggested description:
+
+"Explore thousands of WhatsApp groups and channels across education, entertainment, jobs, friendship, technology, and more."
+
+Include:
+
+- Search bar.
+- Browse Groups button.
+- Browse Channels button.
+- Submit Your Link button.
+
+Search should work immediately.
+
+## Featured Section
+
+Show promoted groups and channels.
+
+Each card should contain:
+
+- Group or channel profile picture.
+- Name.
+- Category.
+- Short description.
+- Verified status if applicable.
+- Featured badge.
+- View Group / View Channel button.
+- Click count.
+
+Display no more than 10 actively promoted entries globally.
+
+Promoted entries should appear in a premium section near the top of the homepage.
+
+The admin can determine the order of featured entries.
+
+## Category Section
+
+Display categories using a clean responsive grid.
+
+Each category card should show:
+
+- Category icon.
+- Category name.
+- Number of groups.
+- Number of channels.
+
+## Recently Added
+
+Show the latest approved and published groups/channels.
+
+## Most Popular
+
+Show groups and channels with the highest legitimate click counts.
+
+## Blog Section
+
+Display the latest blog articles.
+
+## Footer
+
+Include:
+
+- About.
+- Contact.
+- Submit Link.
+- Blog.
+- Terms.
+- Privacy Policy.
+- Disclaimer.
+- Report Content.
+- WhatsApp contact.
+- Instagram.
+- SK MODS branding.
+
+---
+
+# 6. WHATSAPP GROUP AND CHANNEL CATEGORIES
+
+The admin must be able to create, edit, reorder, disable, and delete categories.
+
+Create these default categories:
+
+1. Islamic
+2. Education
+3. Jobs
+4. Technology
+5. Entertainment
+6. Friendship
+7. Love & Relationships
+8. Chatting
+9. Business
+10. Gaming
+11. Sports
+12. News
+13. Health & Fitness
+14. Shopping
+15. Travel
+16. Movies
+17. Music
+18. Programming
+19. Freelancing
+20. Other
+
+The admin can create unlimited additional categories.
+
+Each category should have:
+
+- Name.
+- Slug.
+- Description.
+- Icon.
+- SEO title.
+- SEO description.
+- Display order.
+- Active/inactive status.
+
+Prevent duplicate category slugs.
+
+If a category is deleted, do not silently delete all associated groups.
+
+Allow the admin to reassign existing entries to another category or archive them.
+
+---
+
+# 7. GROUP AND CHANNEL SUBMISSION SYSTEM
+
+Users must be able to submit groups and channels without creating an account.
+
+Create a modern submission page.
+
+## Step 1: Select Submission Type
+
+Options:
+
+- WhatsApp Group.
+- WhatsApp Channel.
+
+## Step 2: Select Category
+
+Display all active categories.
+
+## Step 3: Enter WhatsApp Invite Link
+
+Allow users to paste a valid WhatsApp invite link.
+
+Examples of supported link formats may include:
+
+- https://chat.whatsapp.com/...
+- https://whatsapp.com/channel/...
+- https://www.whatsapp.com/channel/...
+
+Validate the URL server-side.
+
+Reject unrelated URLs.
+
+Do not accept arbitrary external URLs as WhatsApp invite links.
+
+## Step 4: Automatic Metadata Fetching
+
+This is a critical feature.
+
+Implement the best available automatic metadata retrieval system for WhatsApp groups and channels.
+
+When a user pastes a valid invite link:
+
+1. Detect whether it is a group or channel.
+2. Normalize the URL.
+3. Attempt to retrieve the group/channel name.
+4. Attempt to retrieve its profile picture.
+5. Retrieve a description if a supported method provides one.
+6. Display a live preview.
+7. Allow the user to edit the name and description if needed.
+8. Allow the user to upload a profile picture manually.
+
+### Automatic Metadata Fetching Requirements
+
+Do not assume WhatsApp provides a public API for fetching arbitrary group metadata.
+
+Use a configurable metadata provider architecture.
+
+Create a server-side metadata service with a provider interface.
+
+Possible providers:
+
+- Official or legitimately supported metadata integrations, where available.
+- A configurable third-party metadata API.
+- A manual fallback.
+
+Provider API keys must be stored in environment variables.
+
+Never expose provider API keys in frontend JavaScript.
+
+Do not use a user's personal WhatsApp credentials.
+
+Do not require a user to scan a QR code or connect their private WhatsApp account.
+
+Do not use unauthorized private WhatsApp endpoints.
+
+Do not scrape private group data.
+
+Do not claim that metadata was successfully fetched when it was not.
+
+If automatic fetching fails:
+
+Display a clear message:
+
+"We couldn't automatically retrieve this group's information. Please enter the group name and upload its profile picture."
+
+Provide:
+
+- Group name input.
+- Description input.
+- Image upload.
+- Preview.
+
+The user should still be able to submit the link.
+
+### Metadata Caching
+
+Cache successfully retrieved metadata.
+
+Use a database table or caching mechanism.
+
+Avoid fetching the same link repeatedly.
+
+Use reasonable expiration times.
+
+### Profile Picture Handling
+
+Use Supabase Storage for uploaded images.
+
+Validate image file types.
+
+Validate image size.
+
+Do not trust image URLs submitted by users.
+
+Avoid allowing arbitrary external image URLs to create server-side request forgery risks.
+
+---
+
+# 8. SUBMISSION FLOW AND ADDSTERRA ADS
+
+Integrate Addsterra advertisements.
+
+The website should have configurable advertisement placements.
+
+## Advertisement Locations
+
+1. Homepage.
+2. Category pages.
+3. Group/channel detail pages.
+4. Submission page.
+5. Blog pages.
+
+The admin must be able to enable or disable ad placements.
+
+Use the actual Addsterra publisher code supplied by the website owner.
+
+Do not invent publisher IDs or ad codes.
+
+Create a safe advertisement component.
+
+Load advertisements without blocking the entire application.
+
+## Submission Advertisement Flow
+
+The user should:
+
+1. Select a group or channel.
+2. Select a category.
+3. Enter the invite link.
+4. Review the detected metadata.
+5. Submit the entry.
+6. See an advertisement placement during the submission process.
+
+The submission must not be lost if the advertisement fails to load.
+
+Do not require users to click advertisements.
+
+Do not create artificial ad clicks.
+
+Do not disguise advertisements as website buttons.
+
+Do not use deceptive ad placement.
+
+The application must comply with Addsterra's applicable publisher policies.
+
+## Submission Rules
+
+Normal group/channel submissions should be published immediately.
+
+However:
+
+- Featured promotions require admin approval.
+- Reported content can be hidden by an admin.
+- Suspicious submissions can be rate-limited.
+- Duplicate invite links should be detected.
+- Admin can remove inappropriate content.
+
+Create a clear success message after submission.
+
+Display the public URL of the submitted entry.
+
+---
+
+# 9. GROUP AND CHANNEL DETAIL PAGES
+
+Create a professional detail page for every group and channel.
+
+Display:
+
+- Profile picture.
+- Name.
+- Description.
+- Category.
+- Submission date.
+- Total clicks.
+- Featured status.
+- Related groups.
+- Related channels.
+- Report button.
+- Share button.
+- WhatsApp join button.
+
+## Join Button
+
+When the user clicks Join Group or View Channel:
+
+1. Record a legitimate click event.
+2. Update the click counter.
+3. Redirect the user to the WhatsApp invite link.
+
+Do not open unnecessary popups.
+
+Avoid artificial delays.
+
+The user should be able to join easily.
+
+## Share Feature
+
+Include:
+
+- Copy Link.
+- WhatsApp Share.
+- Native Share API where supported.
+
+The share message should contain:
+
+- Group/channel name.
+- Website URL.
+- Group/channel category.
+
+Example:
+
+"Discover this WhatsApp group on WT-LINKS: [Group Name]"
+
+## Related Groups
+
+Show entries from the same category.
+
+Avoid showing the current group as a related group.
+
+---
+
+# 10. CLICK COUNTER AND ANALYTICS
+
+Every group and channel must have a click counter.
+
+The system should track:
+
+- Total clicks.
+- Unique visitors where reasonably possible.
+- Daily clicks.
+- Weekly clicks.
+- Monthly clicks.
+- Promotion clicks.
+- Most popular entries.
+
+Use a server-side event recording system.
+
+Do not trust client-submitted click counts.
+
+Prevent obvious click manipulation using:
+
+- Rate limiting.
+- Duplicate event prevention.
+- Reasonable deduplication windows.
+- Bot filtering where practical.
+
+Do not use invasive fingerprinting.
+
+The click count should be visible on the public group card and detail page.
+
+The admin dashboard should display analytics.
+
+---
+
+# 11. FEATURED AND PROMOTED GROUPS
+
+The website supports a maximum of 10 active promoted entries globally.
+
+The promoted entries can be:
+
+- WhatsApp Groups.
+- WhatsApp Channels.
+
+## User Promotion Request
+
+Each public group/channel detail page should include:
+
+"Promote This Group"
+
+When clicked, open a promotion request flow.
+
+Display:
+
+- Group/channel name.
+- Group/channel link.
+- Website URL.
+- Promotion duration.
+- Promotion information.
+- WhatsApp contact button.
+
+The user should be redirected to WhatsApp with a prefilled message.
+
+WhatsApp number:
+
+923254038592
+
+Use this WhatsApp URL:
+
+https://wa.me/923254038592
+
+### Example WhatsApp Message
+
+"Assalamualaikum,
+
+I want to promote my WhatsApp group/channel on WT-LINKS.
+
+Name: [Group Name]
+
+Link: [WhatsApp Invite Link]
+
+WT-LINKS Page: [Public Website URL]
+
+Requested Duration: [Duration]
+
+Please provide promotion details and payment information.
+
+Thank you."
+
+The message must be URL-encoded correctly.
+
+The website should not automatically claim payment has been completed.
+
+## Admin Promotion Management
+
+The admin can:
+
+- Approve promotion requests.
+- Reject promotion requests.
+- Set promotion duration.
+- Set promotion price.
+- Set promotion start date.
+- Set promotion end date.
+- Manually promote any group/channel.
+- Remove a promoted entry.
+- Change featured order.
+- View promotion analytics.
+- View expired promotions.
+
+The maximum number of active promotions must be enforced server-side.
+
+If 10 promotions are already active, reject additional promotion activation until a slot becomes available.
+
+Do not rely only on frontend checks.
+
+Use database transactions or appropriate database constraints to prevent race conditions.
+
+## Promotion Expiration
+
+Promotion duration is controlled by the admin.
+
+Examples:
+
+- 3 days.
+- 7 days.
+- 15 days.
+- 30 days.
+- Custom duration.
+
+Expired promotions must stop appearing automatically.
+
+Use database queries that filter out expired promotions.
+
+Do not depend on a browser timer.
+
+---
+
+# 12. ADMIN DASHBOARD — /SK
+
+Create a professional admin dashboard.
+
+Admin access URL:
+
+https://wagrouplinks.vercel.app/SK
+
+The route is private.
+
+The URL is not a security mechanism by itself.
+
+Implement proper server-side authentication and authorization.
+
+## Admin Login
+
+Username:
+
+syedking12
+
+Password:
+
+The website owner will configure the password personally.
+
+Use a secure environment variable.
+
+Example:
+
+ADMIN_USERNAME=syedking12
+
+ADMIN_PASSWORD_HASH=...
+
+Do not put the actual password in source code.
+
+Do not expose the password or password hash in frontend JavaScript.
+
+Use a secure password hashing algorithm such as Argon2id or bcrypt.
+
+Use secure HTTP-only session cookies.
+
+Use:
+
+- SameSite protection.
+- Secure cookies in production.
+- Session expiration.
+- Server-side authorization checks.
+- Rate limiting.
+- Login attempt protection.
+
+Do not create a public admin registration page.
+
+Do not allow users to become administrators.
+
+The owner must be able to change the password through environment configuration.
+
+The admin login page should have:
+
+- Username.
+- Password.
+- Show/hide password.
+- Login button.
+- Error handling.
+- Rate limiting.
+
+## Admin Dashboard Overview
+
+Display:
+
+- Total groups.
+- Total channels.
+- Total categories.
+- Total clicks.
+- Active promotions.
+- Pending promotion requests.
+- Total blog posts.
+- Recent submissions.
+- Recent reports.
+
+## Admin Navigation
+
+Create these sections:
+
+1. Overview.
+2. Groups.
+3. Channels.
+4. Categories.
+5. Promotions.
+6. Promotion Requests.
+7. Reports.
+8. Blog Posts.
+9. Analytics.
+10. Advertisement Settings.
+11. Website Settings.
+12. SEO Settings.
+13. Security Settings.
+
+---
+
+# 13. ADMIN GROUP AND CHANNEL MANAGEMENT
+
+The admin can:
+
+- View all submitted groups.
+- View all submitted channels.
+- Search by name.
+- Search by category.
+- Search by invite link.
+- Edit group information.
+- Edit channel information.
+- Change category.
+- Change profile picture.
+- Change description.
+- Remove a group.
+- Remove a channel.
+- Restore archived entries.
+- Mark an entry as featured.
+- Remove featured status.
+- View click analytics.
+- View submission date.
+- View promotion history.
+
+Add confirmation dialogs for destructive actions.
+
+Do not permanently delete content without an appropriate confirmation.
+
+Support soft deletion or archiving.
+
+---
+
+# 14. CATEGORY MANAGEMENT
+
+Create a complete category management system.
+
+Admin can:
+
+- Create categories.
+- Edit categories.
+- Delete categories.
+- Reorder categories.
+- Change category icons.
+- Change category descriptions.
+- Change category slugs.
+- Set categories active/inactive.
+- View the number of groups and channels in each category.
+
+Use clean forms.
+
+Validate category slugs.
+
+Prevent duplicate slugs.
+
+---
+
+# 15. BLOG CMS
+
+Create a complete blog publishing system similar to a lightweight Blogger experience.
+
+Admin can write and publish blog posts.
+
+The blog editor should support:
+
+- Title.
+- Slug.
+- Short description.
+- Main content.
+- Headings.
+- Paragraphs.
+- Bold.
+- Italic.
+- Links.
+- Lists.
+- Images.
+- Image upload.
+- Image URL insertion.
+- Image captions.
+- Image alignment.
+- Featured image.
+- SEO title.
+- SEO description.
+- Tags.
+- Category.
+- Draft status.
+- Published status.
+- Scheduled publishing if practical.
+
+The editor must support inserting images into blog content.
+
+Use a lightweight editor.
+
+Sanitize HTML output.
+
+Prevent stored XSS.
+
+The blog should support:
+
+- Blog listing.
+- Blog detail pages.
+- Related articles.
+- Latest articles.
+- Search.
+- Pagination.
+- SEO metadata.
+- Open Graph images.
+- Canonical URLs.
+
+Do not create fake blog posts that pretend to be real published content.
+
+---
+
+# 16. REPORT SYSTEM
+
+Users can report a group or channel without creating an account.
+
+Report reasons:
+
+- Spam.
+- Scam.
+- Inappropriate content.
+- Broken invite link.
+- Wrong category.
+- Misleading information.
+- Other.
+
+Allow an optional description.
+
+Add rate limiting.
+
+Do not reveal the reporter's private information publicly.
+
+Admin can:
+
+- View reports.
+- Mark as reviewed.
+- Dismiss a report.
+- Remove reported content.
+- Restore content.
+- Add internal notes.
+
+---
+
+# 17. SEARCH AND FILTERS
+
+Create a fast and functional search system.
+
+Users can search:
+
+- Group name.
+- Channel name.
+- Description.
+- Category.
+
+Include filters:
+
+- Groups.
+- Channels.
+- Category.
+- Recently added.
+- Most popular.
+- Featured.
+
+Include sorting:
+
+- Newest.
+- Most popular.
+- Alphabetical.
+- Featured.
+
+Implement pagination.
+
+Use database-level pagination rather than loading every entry into the browser.
+
+Show useful empty states.
+
+Search must work on mobile.
+
+---
+
+# 18. DATABASE DESIGN
+
+Create a proper Supabase PostgreSQL database schema.
+
+Include these tables:
+
+## categories
+
+- id
+- name
+- slug
+- description
+- icon
+- sort_order
+- is_active
+- created_at
+- updated_at
+
+## directory_entries
+
+A unified table for groups and channels.
+
+- id
+- type
+- name
+- slug
+- invite_url
+- description
+- image_url
+- category_id
+- status
+- is_featured
+- created_at
+- updated_at
+- published_at
+- total_clicks
+
+Type must be either:
+
+- group
+- channel
+
+## promotions
+
+- id
+- entry_id
+- status
+- price
+- currency
+- duration_days
+- start_at
+- end_at
+- display_order
+- created_at
+- updated_at
+
+## promotion_requests
+
+- id
+- entry_id
+- requested_duration
+- requested_price
+- status
+- admin_notes
+- created_at
+- reviewed_at
+
+## click_events
+
+- id
+- entry_id
+- event_type
+- visitor_hash
+- created_at
+
+## reports
+
+- id
+- entry_id
+- reason
+- description
+- status
+- admin_notes
+- created_at
+- reviewed_at
+
+## blog_posts
+
+- id
+- title
+- slug
+- excerpt
+- content
+- featured_image
+- seo_title
+- seo_description
+- status
+- published_at
+- created_at
+- updated_at
+
+## blog_categories
+
+- id
+- name
+- slug
+- description
+
+## blog_tags
+
+- id
+- name
+- slug
+
+## website_settings
+
+- id
+- setting_key
+- setting_value
+- updated_at
+
+Add appropriate:
+
+- Primary keys.
+- Foreign keys.
+- Indexes.
+- Unique constraints.
+- Database validation.
+- Timestamps.
+
+Provide the complete SQL migration file.
+
+Do not use insecure database access.
+
+---
+
+# 19. SUPABASE SECURITY
+
+Implement proper Row Level Security policies.
+
+Public visitors should be able to:
+
+- Read published groups and channels.
+- Read active categories.
+- Read published blog posts.
+- Record valid click events.
+- Submit new groups and channels.
+- Submit reports.
+- Request promotion.
+
+Public visitors must not be able to:
+
+- Access the admin dashboard.
+- Read admin credentials.
+- Change promotion status.
+- Make themselves administrators.
+- Modify click counters directly.
+- Access private admin notes.
+- Edit arbitrary existing groups.
+- Delete other users' submissions.
+- Access unpublished blog posts.
+
+Admin operations must be protected server-side.
+
+Never expose the Supabase service-role key to the browser.
+
+Use environment variables.
+
+---
+
+# 20. SEO OPTIMIZATION
+
+Make WT-LINKS SEO-friendly.
+
+Implement:
+
+- Dynamic metadata.
+- Page titles.
+- Meta descriptions.
+- Canonical URLs.
+- Open Graph metadata.
+- Twitter cards.
+- Sitemap.
+- Robots.txt.
+- Structured data.
+- Breadcrumbs.
+- Category SEO pages.
+- Blog SEO pages.
+- Group detail metadata.
+- Channel detail metadata.
+
+Use the correct canonical domain:
+
+https://wagrouplinks.vercel.app
+
+Create:
+
+- /sitemap.xml
+- /robots.txt
+
+Use appropriate structured data where valid.
+
+Do not generate fake ratings or reviews.
+
+Do not use misleading SEO metadata.
+
+Avoid indexing:
+
+- Admin pages.
+- Private dashboard pages.
+- Internal search result combinations where inappropriate.
+- Unpublished content.
+- Duplicate URLs.
+
+Use clean, readable URLs.
+
+Example:
+
+/group/online-education-community
+
+/channel/islamic-reminders
+
+/category/education
+
+/blog/best-whatsapp-study-groups
+
+---
+
+# 21. CUSTOM 404 PAGE
+
+Create a beautiful custom 404 page.
+
+Include:
+
+- WT-LINKS logo.
+- Clear "Page Not Found" message.
+- Search bar.
+- Home button.
+- Browse Groups button.
+- Browse Channels button.
+- Popular categories.
+
+Use a friendly, professional design.
+
+Do not display a generic browser error.
+
+---
+
+# 22. PERFORMANCE AND LIGHTWEIGHT DESIGN
+
+The website must be fast.
+
+Prioritize:
+
+- Lightweight JavaScript.
+- Server Components.
+- Optimized images.
+- Lazy loading.
+- Database pagination.
+- Caching.
+- Responsive images.
+- Minimal dependencies.
+- Fast navigation.
+- Efficient queries.
+
+Use Next.js Image where appropriate.
+
+Avoid loading large libraries on every page.
+
+Avoid unnecessary client-side rendering.
+
+Do not fetch every group on the homepage.
+
+Use server-side pagination.
+
+Use loading skeletons only where useful.
+
+The site should work well on slower mobile internet connections in Pakistan.
+
+Aim for excellent Lighthouse performance.
+
+Do not sacrifice accessibility for animations.
+
+---
+
+# 23. SECURITY REQUIREMENTS
+
+Implement:
+
+- Server-side validation.
+- URL validation.
+- Input sanitization.
+- Rate limiting.
+- Secure admin authentication.
+- Secure session handling.
+- CSRF protection where applicable.
+- SQL injection protection.
+- XSS protection.
+- Safe image upload handling.
+- Environment variable management.
+- Proper error handling.
+
+Do not expose internal errors to public users.
+
+Do not log passwords, session tokens, or secret API keys.
+
+Do not trust frontend validation.
+
+Do not trust client-submitted admin status.
+
+Do not trust client-submitted click counts.
+
+Do not use arbitrary user-provided image URLs without safe validation.
+
+---
+
+# 24. ENVIRONMENT VARIABLES
+
+Create a complete `.env.example` file.
+
+Include variables such as:
+
+NEXT_PUBLIC_SITE_URL=https://wagrouplinks.vercel.app
+
+NEXT_PUBLIC_SUPABASE_URL=
+
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+
+SUPABASE_SERVICE_ROLE_KEY=
+
+ADMIN_USERNAME=syedking12
+
+ADMIN_PASSWORD_HASH=
+
+SESSION_SECRET=
+
+WHATSAPP_NUMBER=923254038592
+
+ADDSTERRA_PUBLISHER_ID=
+
+ADDSTERRA_AD_CODE=
+
+WHATSAPP_METADATA_PROVIDER=
+
+WHATSAPP_METADATA_API_KEY=
+
+Do not include actual secrets.
+
+Do not commit `.env.local`.
+
+Explain which variables must be configured in Vercel.
+
+---
+
+# 25. VERCEL DEPLOYMENT
+
+The project must be ready for Vercel.
+
+Requirements:
+
+- Correct Next.js configuration.
+- Production build must succeed.
+- No broken imports.
+- No missing dependencies.
+- No placeholder functions.
+- No fake API responses.
+- No frontend-only database simulation.
+- Proper environment variables.
+- Supabase migrations.
+- Responsive layout.
+- Working public routes.
+- Working admin routes.
+- Working API endpoints.
+- Proper 404 handling.
+
+Provide a README with:
+
+1. Project overview.
+2. Technology stack.
+3. Local setup.
+4. Supabase configuration.
+5. Database migration instructions.
+6. Admin password setup.
+7. Metadata provider configuration.
+8. Addsterra configuration.
+9. Vercel deployment.
+10. Domain configuration.
+11. Security notes.
+
+The website must deploy correctly to:
+
+https://wagrouplinks.vercel.app
+
+---
+
+# 26. SK MODS BRANDING
+
+Use the following branding throughout the website:
+
+WT-LINKS
+
+Powered by SK MODS
+
+Developer: Syed Kashif
+
+Email:
+
+syedkashifrazashah14@gmail.com
+
+WhatsApp:
+
+923254038592
+
+Instagram:
+
+@Syed_pro_dev
+
+Use these details in:
+
+- Footer.
+- About page.
+- Contact page.
+- Admin dashboard.
+- Website settings.
+- Developer attribution.
+
+Create a professional WT-LINKS logo.
+
+Use a clean icon combining the concept of WhatsApp links and community discovery.
+
+Do not use an overly complex logo.
+
+Create a proper favicon.
+
+---
+
+# 27. DEVELOPMENT EXECUTION INSTRUCTIONS
+
+Build the project in a structured way.
+
+First:
+
+1. Define the complete architecture.
+2. Create the Next.js project.
+3. Configure Tailwind CSS.
+4. Configure Supabase.
+5. Create database migrations.
+6. Implement authentication.
+7. Build the public website.
+8. Implement submission functionality.
+9. Implement metadata fetching.
+10. Implement click analytics.
+11. Implement promotions.
+12. Implement the admin dashboard.
+13. Implement the blog CMS.
+14. Implement SEO.
+15. Implement Addsterra.
+16. Test all features.
+17. Prepare Vercel deployment.
+
+Do not stop after creating the homepage.
+
+Do not ask me to manually implement missing features.
+
+If a third-party service requires credentials, create the correct integration structure and clearly explain which credentials I must supply.
+
+If automatic WhatsApp metadata fetching is not possible through a supported method, implement a graceful manual fallback rather than pretending it works.
+
+Do not create fake functionality.
+
+---
+
+# 28. FINAL ACCEPTANCE CRITERIA
+
+The final project is complete only when:
+
+- The homepage is fully functional.
+- Groups can be submitted.
+- Channels can be submitted.
+- Categories work.
+- Search works.
+- Filters work.
+- Pagination works.
+- Click tracking works.
+- Featured groups work.
+- The maximum of 10 active promotions is enforced.
+- Promotion requests work.
+- WhatsApp promotion messages work.
+- Admin login works securely.
+- Admin can manage groups.
+- Admin can manage channels.
+- Admin can manage categories.
+- Admin can manage promotions.
+- Admin can manage reports.
+- Admin can publish blogs.
+- Blog images work.
+- Addsterra integration is configurable.
+- SEO metadata works.
+- Sitemap works.
+- Robots.txt works.
+- Dark mode works.
+- The 404 page works.
+- The website is responsive.
+- The database is connected.
+- The production build succeeds.
+- The project is ready for Vercel deployment.
+
+**The final result should be a lightweight, professional, premium WhatsApp community directory built under the SK MODS brand.**
+
+Website:
+
+https://wagrouplinks.vercel.app
+
+Project name:
+
+WT-LINKS
+
+Build the complete application now.

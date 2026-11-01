@@ -1,0 +1,139 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        request.auth.token.email_verified == true &&
+        (request.auth.token.email == 'syedtaseerrazashah55@gmail.com' ||
+         exists(/databases/$(database)/documents/admins/$(request.auth.uid)));
+    }
+
+    function isValidCategory(data) {
+      return data.keys().hasAll(['id', 'name', 'slug', 'sort_order', 'is_active']) &&
+        data.keys().hasOnly(['id', 'name', 'slug', 'description', 'icon', 'seo_title', 'seo_description', 'sort_order', 'is_active', 'created_at', 'updated_at']) &&
+        data.id is string && data.id.size() <= 64 &&
+        data.name is string && data.name.size() >= 2 && data.name.size() <= 80 &&
+        data.slug is string && data.slug.size() >= 2 && data.slug.size() <= 80 && data.slug.matches('^[a-z0-9\\-]+$') &&
+        (!('description' in data) || (data.description is string && data.description.size() <= 500)) &&
+        (!('icon' in data) || (data.icon is string && data.icon.size() <= 40)) &&
+        (!('seo_title' in data) || (data.seo_title is string && data.seo_title.size() <= 120)) &&
+        (!('seo_description' in data) || (data.seo_description is string && data.seo_description.size() <= 240)) &&
+        data.sort_order is int &&
+        data.is_active is bool;
+    }
+
+    function isValidDirectoryEntry(data) {
+      return data.keys().hasAll(['id', 'type', 'name', 'slug', 'invite_url', 'category_id', 'status', 'is_featured', 'total_clicks']) &&
+        data.keys().hasOnly(['id', 'type', 'name', 'slug', 'invite_url', 'description', 'image_url', 'category_id', 'status', 'is_featured', 'is_verified', 'total_clicks', 'created_at', 'updated_at', 'published_at']) &&
+        data.id is string && data.id.size() <= 64 &&
+        data.type is string && (data.type == 'group' || data.type == 'channel') &&
+        data.name is string && data.name.size() >= 2 && data.name.size() <= 120 &&
+        data.slug is string && data.slug.size() >= 2 && data.slug.size() <= 140 && data.slug.matches('^[a-z0-9\\-]+$') &&
+        data.invite_url is string && data.invite_url.size() <= 300 && data.invite_url.matches('^https://(chat\\.whatsapp\\.com|whatsapp\\.com/channel|www\\.whatsapp\\.com/channel)/[A-Za-z0-9_\\-]+/?$') &&
+        (!('description' in data) || (data.description is string && data.description.size() <= 1000)) &&
+        (!('image_url' in data) || (data.image_url is string && data.image_url.size() <= 500)) &&
+        data.category_id is string && data.category_id.size() <= 64 &&
+        data.status is string && (data.status == 'published' || data.status == 'archived' || data.status == 'removed') &&
+        data.is_featured is bool &&
+        (!('is_verified' in data) || data.is_verified is bool) &&
+        data.total_clicks is int && data.total_clicks >= 0;
+    }
+
+    function isValidPromotion(data) {
+      return data.keys().hasAll(['id', 'entry_id', 'status', 'duration_days', 'start_at', 'end_at', 'display_order']) &&
+        data.keys().hasOnly(['id', 'entry_id', 'status', 'price', 'currency', 'duration_days', 'start_at', 'end_at', 'display_order', 'created_at', 'updated_at']) &&
+        data.id is string && data.id.size() <= 64 &&
+        data.entry_id is string && data.entry_id.size() <= 64 &&
+        data.status is string && (data.status == 'active' || data.status == 'expired' || data.status == 'cancelled') &&
+        data.duration_days is int && data.duration_days >= 1 && data.duration_days <= 365 &&
+        data.start_at is string && data.start_at.size() <= 40 &&
+        data.end_at is string && data.end_at.size() <= 40 &&
+        data.display_order is int;
+    }
+
+    function isValidReport(data) {
+      return data.keys().hasAll(['id', 'entry_id', 'reason', 'status', 'created_at']) &&
+        data.keys().hasOnly(['id', 'entry_id', 'reason', 'description', 'status', 'admin_notes', 'created_at', 'reviewed_at']) &&
+        data.id is string && data.id.size() <= 64 &&
+        data.entry_id is string && data.entry_id.size() <= 64 &&
+        data.reason is string && data.reason.size() >= 2 && data.reason.size() <= 80 &&
+        (!('description' in data) || (data.description is string && data.description.size() <= 1000)) &&
+        data.status is string && (data.status == 'pending' || data.status == 'reviewed' || data.status == 'dismissed') &&
+        (!('admin_notes' in data) || (data.admin_notes is string && data.admin_notes.size() <= 500)) &&
+        data.created_at is string && data.created_at.size() <= 40;
+    }
+
+    function isValidBlogPost(data) {
+      return data.keys().hasAll(['id', 'title', 'slug', 'content', 'status']) &&
+        data.keys().hasOnly(['id', 'title', 'slug', 'excerpt', 'content', 'featured_image', 'seo_title', 'seo_description', 'category', 'tags', 'status', 'published_at', 'created_at', 'updated_at']) &&
+        data.id is string && data.id.size() <= 64 &&
+        data.title is string && data.title.size() >= 3 && data.title.size() <= 180 &&
+        data.slug is string && data.slug.size() >= 3 && data.slug.size() <= 180 && data.slug.matches('^[a-z0-9\\-]+$') &&
+        data.content is string && data.content.size() <= 50000 &&
+        data.status is string && (data.status == 'draft' || data.status == 'published');
+    }
+
+    match /admins/{adminId} {
+      allow get: if isValidId(adminId) && isSignedIn() && request.auth.uid == adminId;
+      allow list, create, update, delete: if false;
+    }
+
+    match /categories/{categoryId} {
+      allow get: if isValidId(categoryId) && (existing().is_active == true || isAdmin());
+      allow list: if existing().is_active == true || isAdmin();
+      allow create: if isValidId(categoryId) && isAdmin() && isValidCategory(incoming());
+      allow update: if isValidId(categoryId) && isAdmin() && isValidCategory(incoming());
+      allow delete: if isValidId(categoryId) && isAdmin();
+    }
+
+    match /directory_entries/{entryId} {
+      allow get: if isValidId(entryId) && (existing().status == 'published' || isAdmin());
+      allow list: if existing().status == 'published' || isAdmin();
+      allow create: if isValidId(entryId) && isValidDirectoryEntry(incoming()) &&
+        (isAdmin() || (incoming().status == 'published' && incoming().is_featured == false && incoming().total_clicks == 0));
+      allow update: if isValidId(entryId) && isValidDirectoryEntry(incoming()) && isAdmin();
+      allow delete: if isValidId(entryId) && isAdmin();
+    }
+
+    match /promotions/{promotionId} {
+      allow get: if isValidId(promotionId) && (existing().status == 'active' || isAdmin());
+      allow list: if existing().status == 'active' || isAdmin();
+      allow create, update, delete: if isValidId(promotionId) && isAdmin() && isValidPromotion(incoming());
+    }
+
+    match /reports/{reportId} {
+      allow get: if isValidId(reportId) && isAdmin();
+      allow list: if isAdmin();
+      allow create: if isValidId(reportId) && isValidReport(incoming()) && incoming().status == 'pending';
+      allow update: if isValidId(reportId) && isValidReport(incoming()) && isAdmin();
+      allow delete: if isValidId(reportId) && isAdmin();
+    }
+
+    match /blog_posts/{postId} {
+      allow get: if isValidId(postId) && (existing().status == 'published' || isAdmin());
+      allow list: if existing().status == 'published' || isAdmin();
+      allow create, update: if isValidId(postId) && isAdmin() && isValidBlogPost(incoming());
+      allow delete: if isValidId(postId) && isAdmin();
+    }
+  }
+}

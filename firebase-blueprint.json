@@ -1,0 +1,125 @@
+{
+  "entities": {
+    "Category": {
+      "title": "Category",
+      "description": "WhatsApp group and channel directory category",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "slug": { "type": "string", "minLength": 2, "maxLength": 80, "pattern": "^[a-z0-9\\-]+$" },
+        "description": { "type": "string", "maxLength": 500 },
+        "icon": { "type": "string", "maxLength": 40 },
+        "seo_title": { "type": "string", "maxLength": 120 },
+        "seo_description": { "type": "string", "maxLength": 240 },
+        "sort_order": { "type": "integer" },
+        "is_active": { "type": "boolean" },
+        "created_at": { "type": "string", "maxLength": 40 },
+        "updated_at": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["id", "name", "slug", "sort_order", "is_active"]
+    },
+    "DirectoryEntry": {
+      "title": "DirectoryEntry",
+      "description": "Unified WhatsApp Group or Channel entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "type": { "type": "string", "enum": ["group", "channel"], "maxLength": 16 },
+        "name": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "slug": { "type": "string", "minLength": 2, "maxLength": 140, "pattern": "^[a-z0-9\\-]+$" },
+        "invite_url": { "type": "string", "maxLength": 300 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "image_url": { "type": "string", "maxLength": 500 },
+        "category_id": { "type": "string", "maxLength": 64 },
+        "status": { "type": "string", "enum": ["published", "archived", "removed"], "maxLength": 20 },
+        "is_featured": { "type": "boolean" },
+        "is_verified": { "type": "boolean" },
+        "total_clicks": { "type": "integer" },
+        "created_at": { "type": "string", "maxLength": 40 },
+        "updated_at": { "type": "string", "maxLength": 40 },
+        "published_at": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["id", "type", "name", "slug", "invite_url", "category_id", "status", "is_featured", "total_clicks"]
+    },
+    "Promotion": {
+      "title": "Promotion",
+      "description": "Active or expired featured promotion slot (max 10 active globally)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "entry_id": { "type": "string", "maxLength": 64 },
+        "status": { "type": "string", "enum": ["active", "expired", "cancelled"], "maxLength": 20 },
+        "price": { "type": "number" },
+        "currency": { "type": "string", "maxLength": 10 },
+        "duration_days": { "type": "integer" },
+        "start_at": { "type": "string", "maxLength": 40 },
+        "end_at": { "type": "string", "maxLength": 40 },
+        "display_order": { "type": "integer" },
+        "created_at": { "type": "string", "maxLength": 40 },
+        "updated_at": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["id", "entry_id", "status", "duration_days", "start_at", "end_at", "display_order"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "User-submitted report against a group or channel",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "entry_id": { "type": "string", "maxLength": 64 },
+        "reason": { "type": "string", "maxLength": 80 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["pending", "reviewed", "dismissed"], "maxLength": 20 },
+        "admin_notes": { "type": "string", "maxLength": 500 },
+        "created_at": { "type": "string", "maxLength": 40 },
+        "reviewed_at": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["id", "entry_id", "reason", "status", "created_at"]
+    },
+    "BlogPost": {
+      "title": "BlogPost",
+      "description": "Published or draft blog article in the WT-LINKS CMS",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "string", "minLength": 3, "maxLength": 180 },
+        "slug": { "type": "string", "minLength": 3, "maxLength": 180, "pattern": "^[a-z0-9\\-]+$" },
+        "excerpt": { "type": "string", "maxLength": 500 },
+        "content": { "type": "string", "maxLength": 50000 },
+        "featured_image": { "type": "string", "maxLength": 500 },
+        "seo_title": { "type": "string", "maxLength": 160 },
+        "seo_description": { "type": "string", "maxLength": 300 },
+        "category": { "type": "string", "maxLength": 80 },
+        "tags": { "type": "string", "maxLength": 250 },
+        "status": { "type": "string", "enum": ["draft", "published"], "maxLength": 20 },
+        "published_at": { "type": "string", "maxLength": 40 },
+        "created_at": { "type": "string", "maxLength": 40 },
+        "updated_at": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["id", "title", "slug", "content", "status"]
+    }
+  },
+  "firestore": {
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Directory categories"
+    },
+    "/directory_entries/{entryId}": {
+      "schema": { "$ref": "#/entities/DirectoryEntry" },
+      "description": "Published and archived WhatsApp groups and channels"
+    },
+    "/promotions/{promotionId}": {
+      "schema": { "$ref": "#/entities/Promotion" },
+      "description": "Promoted entry slots"
+    },
+    "/reports/{reportId}": {
+      "schema": { "$ref": "#/entities/Report" },
+      "description": "Abuse and broken link reports"
+    },
+    "/blog_posts/{postId}": {
+      "schema": { "$ref": "#/entities/BlogPost" },
+      "description": "Blog CMS articles"
+    }
+  }
+}

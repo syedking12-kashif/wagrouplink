@@ -1,0 +1,6 @@
+{
+  "name": "WT-LINKS — WhatsApp Group & Channel Directory",
+  "description": "Discover, submit, share, and promote verified WhatsApp Groups and Channels across 20+ categories on WT-LINKS by SK MODS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
